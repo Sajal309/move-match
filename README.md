@@ -2,11 +2,12 @@
 
 React Native iOS and Android app for camera-counted practice and 1v1 exercise challenges. Pose inference is implemented in a custom native MediaPipe module. Camera frames and complete pose streams remain on the device; the online protocol sends numeric repetition summaries only.
 
-The repository contains mobile app source, a Fastify/Postgres/Redis service, SQL migrations, deterministic push-up and pull-up repetition engines, and the native pose module. Online services and ranked exercise flags start disabled. Source implementation is not evidence of physical-device or production readiness; see [implementation status](docs/IMPLEMENTATION_STATUS.md) and [native compatibility](docs/COMPATIBILITY.md).
+The repository contains mobile app source, a Go/Postgres/Redis service, SQL migrations, deterministic push-up and pull-up repetition engines, and the native pose module. Online services and ranked exercise flags start disabled. Source implementation is not evidence of physical-device or production readiness; see [implementation status](docs/IMPLEMENTATION_STATUS.md) and [native compatibility](docs/COMPATIBILITY.md).
 
 ## Requirements
 
 - Node.js 22.13 or later and pnpm 11
+- Go 1.26 or later for the API
 - Xcode 26.4+ and CocoaPods 1.16+ for iOS native builds
 - JDK 17, Android SDK/NDK and Gradle dependencies for Android native builds
 - A physical iOS and Android phone for camera/tracking and cross-platform match validation
@@ -27,12 +28,12 @@ With Xcode 27, open **Device Hub** to see and interact with the iOS simulator: `
 
 For a physical phone, set `EXPO_PUBLIC_API_URL` to a reachable HTTPS URL or your computer’s LAN address; `localhost` on the phone points back to the phone itself.
 
-The API uses private server variables in `.env.example`. Apply the migration with `pnpm db:migrate`, then run `pnpm api:dev`. Supabase email OTP, private PostgreSQL and Redis must already be provisioned. The public account-deletion page is served at `/account-deletion` after deployment and requires `PUBLIC_SUPPORT_EMAIL`.
+The API uses private server variables in `.env.example`. Apply the migration with `pnpm db:migrate`, then run `pnpm api:dev`. Supabase email OTP, private PostgreSQL and Redis must already be provisioned. You can build the API with `pnpm api:build`. The public account-deletion page is served at `/account-deletion` after deployment and requires `PUBLIC_SUPPORT_EMAIL`.
 
 ## Project map
 
 - `apps/mobile` — Expo Router application and local camera/practice flows
-- `apps/api` — authenticated REST and Socket.IO service
+- `apps/api` — Go authenticated REST and Socket.IO service (`cmd/api`, `cmd/migrate`)
 - `modules/pose-tracker` — owned Swift/Kotlin MediaPipe implementation and model bundle
 - `packages/rep-engine` — versioned local movement state machines
 - `packages/contracts` — shared API/event schemas

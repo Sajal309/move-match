@@ -16,11 +16,9 @@ Supabase also needs adult-account email OTP enabled, a real SMTP sender, the `mo
 
 ## Local development setup
 
-- A local Valkey 7.2.14 Redis-protocol service is installed at `/Users/sajalrai/.local/share/movematch/valkey`. It listens only on `127.0.0.1:6379` and runs without disk persistence because it is a development cache. Start it with `/Users/sajalrai/.local/share/movematch/valkey/start.sh`; stop it with `/Users/sajalrai/.local/share/movematch/valkey/stop.sh`. The root `.env` already has `REDIS_URL=redis://127.0.0.1:6379`.
-- The root `.env` is mode 600 and contains the Supabase database URL, the existing project service key, and `DATABASE_SSL_CA_FILE`. The project root CA is stored under the ignored `apps/api/.local` directory and PostgreSQL certificate verification remains enabled. TLS validated successfully, but Supabase rejected the saved database password; reset it in the dashboard and update `DATABASE_URL` before running `pnpm db:migrate` or starting the API. The schema migration has already been applied in Supabase SQL Editor and verified. Do not work around an authentication or certificate error by disabling verification.
-- `SUPABASE_SERVICE_ROLE_KEY` is configured only in the ignored server `.env`. `OPS_ADMIN_USER_IDS` and `PUBLIC_SUPPORT_EMAIL` are still unset; add only trusted operator UUIDs and a real support address to the server `.env`. Never put server values in the mobile app or commit them.
-- `apps/mobile/.env` has the Supabase public client values and `EXPO_PUBLIC_API_URL=http://localhost:8080`. The app maps that host to `10.0.2.2` on Android emulators; iOS Simulator uses `localhost`. Restart Metro after changing the value. Physical phones need the Mac’s reachable LAN address or an HTTPS API URL.
-- Supabase Auth email OTP still needs a custom SMTP provider and redirect configuration. Valkey, the root CA, the service key, simulator API URL, and database schema are configured locally; the API remains stopped until its database password authenticates successfully.
+- Copy `.env.example` to an ignored `.env` file and provide the local Supabase, PostgreSQL and Redis-compatible service values. Keep server credentials out of mobile `EXPO_PUBLIC_*` variables and out of version control.
+- For managed PostgreSQL with a custom CA, keep the CA file outside version control and set `DATABASE_SSL_CA_FILE` to its path. The API verifies PostgreSQL TLS certificates when `DATABASE_SSL=require`.
+- Configure Supabase Auth email OTP, SMTP delivery and redirect URLs in the Supabase project before exercising sign-in. For a physical phone, set `EXPO_PUBLIC_API_URL` to an HTTPS URL or a reachable development machine address; restart Metro after changing it.
 
 ## First deployment sequence
 

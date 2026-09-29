@@ -8,8 +8,9 @@
     "dev": "pnpm --filter @move-match/mobile start",
     "ios": "pnpm --filter @move-match/mobile ios",
     "android": "pnpm --filter @move-match/mobile android",
-    "api:dev": "pnpm --filter @move-match/api dev",
-    "db:migrate": "pnpm --filter @move-match/api migrate",
+    "api:dev": "go run ./apps/api/cmd/api",
+    "api:build": "go build ./apps/api/...",
+    "db:migrate": "go run ./apps/api/cmd/migrate",
     "model:fetch": "python3 scripts/fetch-pose-model.py",
     "native:prebuild": "pnpm --filter @move-match/pose-tracker codegen && pnpm --filter @move-match/mobile prebuild"
   },
