@@ -1,0 +1,19 @@
+{
+  "name": "move-match",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@11.19.0",
+  "engines": { "node": ">=22.13.0" },
+  "scripts": {
+    "dev": "pnpm --filter @move-match/mobile start",
+    "ios": "pnpm --filter @move-match/mobile ios",
+    "android": "pnpm --filter @move-match/mobile android",
+    "api:dev": "pnpm --filter @move-match/api dev",
+    "db:migrate": "pnpm --filter @move-match/api migrate",
+    "model:fetch": "python3 scripts/fetch-pose-model.py",
+    "native:prebuild": "pnpm --filter @move-match/pose-tracker codegen && pnpm --filter @move-match/mobile prebuild"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3"
+  }
+}

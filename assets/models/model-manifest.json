@@ -1,0 +1,8 @@
+{
+  "file": "pose_landmarker_lite.task",
+  "url": "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/latest/pose_landmarker_lite.task",
+  "license": "Apache-2.0",
+  "sha256": "59929e1d1ee95287735ddd833b19cf4ac46d29bc7afddbbf6753c459690d574a",
+  "modelVersion": "google-pose-landmarker-lite-float16",
+  "notes": "Generate and review a content SHA-256 before building. The upstream model URL uses a latest alias; the digest pins the exact bytes for this checkout."
+}

@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "MOVE / MATCH",
+    "slug": "move-match",
+    "scheme": "movematch",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "jsEngine": "hermes",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.movematch.app",
+      "deploymentTarget": "17.0",
+      "infoPlist": {
+        "NSCameraUsageDescription": "MOVE / MATCH uses the camera on your device to recognize exercise movement and count app-standard repetitions. Camera frames stay on this device."
+      }
+    },
+    "android": {
+      "package": "com.movematch.app",
+      "permissions": ["android.permission.CAMERA"]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-sqlite"
+    ],
+    "experiments": { "typedRoutes": true },
+    "extra": { "router": { "origin": false } }
+  }
+}

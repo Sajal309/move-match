@@ -1,0 +1,45 @@
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'com.facebook.react'
+
+apply from: file('../nitrogen/generated/android/MoveMatchPoseTracker+autolinking.gradle')
+
+def reactNativeArchitectures() {
+  def value = rootProject.getProperties().get('reactNativeArchitectures')
+  return value ? value.split(',') : ['armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a']
+}
+
+android {
+  namespace 'com.movematch.pose'
+  ndkVersion rootProject.ext.ndkVersion
+  compileSdk rootProject.ext.compileSdkVersion
+
+  defaultConfig {
+    minSdk rootProject.ext.minSdkVersion
+    targetSdk rootProject.ext.targetSdkVersion
+    externalNativeBuild {
+      cmake {
+        cppFlags '-frtti -fexceptions -Wall -Wextra -fstack-protector-all'
+        arguments '-DANDROID_STL=c++_shared', '-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON'
+        abiFilters (*reactNativeArchitectures())
+      }
+    }
+  }
+  sourceSets.main.assets.srcDirs += ['../assets']
+
+  externalNativeBuild {
+    cmake { path 'CMakeLists.txt' }
+  }
+
+  buildFeatures { prefab true }
+}
+
+dependencies {
+  // These public types are referenced directly by this module's Kotlin sources.
+  implementation 'com.facebook.react:react-native:+'
+  implementation 'androidx.camera:camera-core:1.7.0-alpha03'
+  implementation project(':expo-modules-core')
+  implementation project(':react-native-nitro-modules')
+  implementation project(':react-native-vision-camera')
+  implementation 'com.google.mediapipe:tasks-vision:1.0.0'
+}
